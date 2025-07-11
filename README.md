@@ -1,8 +1,8 @@
 # Deploy
 
-Foi feito o deploy do projeto na Vercel. Pode ser acessado pela url: https://test-ilumeo-front-end.vercel.app
+Foi feito o deploy do projeto na Vercel. Pode ser acessado pela url: https://time-tracker-fe.vercel.app/
 
-Para o back-end, acessar: https://teste-ilumeo-back-end.onrender.com/docs (Documentação)
+Para o back-end, acessar: https://time-tracker-be-88b7.onrender.com/docs (Documentação)
 
 # Para rodar o projeto localmente
 
