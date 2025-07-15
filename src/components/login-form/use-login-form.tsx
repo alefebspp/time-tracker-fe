@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { LoginFn } from "@/services/auth";
+import { LoginRequest } from "@/services/auth";
 import { returnErrorMessage } from "@/utils";
 import { User } from "@/types";
 
@@ -22,7 +22,7 @@ const loginSchema = z.object({
 export type UseLoginFormProps = {
   setUser: (user: User) => void;
   navigate: ReturnType<typeof useNavigate>;
-  login: LoginFn;
+  login: LoginRequest;
 };
 
 export default function useLoginForm({

@@ -4,9 +4,10 @@ import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
-import { register } from "@/services/auth";
-import { returnErrorMessage } from "@/utils";
 import { toast } from "sonner";
+
+import { RegisterRequest } from "@/services/auth";
+import { returnErrorMessage } from "@/utils";
 
 const passwordSchema = z
   .string({ message: "Campo obrigatório" })
@@ -36,10 +37,16 @@ export const registerFormSchema = z.object({
     .min(1, { message: "Campo obrigatório" }),
 });
 
-export default function useRegisterForm() {
-  const [error, setError] = useState<string>();
+export type UseRegisterFormProps = {
+  navigate: ReturnType<typeof useNavigate>;
+  register: RegisterRequest;
+};
 
-  const navigate = useNavigate();
+export default function useRegisterForm({
+  register,
+  navigate,
+}: UseRegisterFormProps) {
+  const [error, setError] = useState<string>();
 
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
@@ -54,7 +61,7 @@ export default function useRegisterForm() {
 
   const password = form.watch("password");
   const confirmPassword = form.watch("confirm_password");
-  const passwordsAreInvalid = confirmPassword !== password;
+  const passwordsAreNotEqual = confirmPassword !== password;
 
   function hasCapitalLetter(password: string) {
     return /[A-Z]/.test(password);
@@ -80,6 +87,10 @@ export default function useRegisterForm() {
 
       const response = await register(values);
 
+      if (response.error) {
+        return setError(response.error.message);
+      }
+
       if (response.message) {
         toast.success(response.message, { position: "top-center" });
         navigate("/");
@@ -94,7 +105,7 @@ export default function useRegisterForm() {
     form,
     onSubmit,
     password,
-    passwordsAreInvalid,
+    passwordsAreNotEqual,
     error,
     hasCapitalLetter,
     hasLetter,
