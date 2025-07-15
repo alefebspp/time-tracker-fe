@@ -9,10 +9,15 @@ export async function getProfile() {
   return response.data;
 }
 
+export type LoginFn = typeof login;
+
 export async function login(params: { email: string; password: string }) {
   const response = await api.post<{
     token: string;
     user: User;
+    error?: {
+      message: string;
+    };
   }>("/auth/sign-in", params);
 
   return response.data;
