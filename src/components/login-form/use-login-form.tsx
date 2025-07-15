@@ -5,9 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { login } from "@/services/auth";
+import { LoginFn } from "@/services/auth";
 import { returnErrorMessage } from "@/utils";
-import { useUserContext } from "@/contexts/user-context";
+import { User } from "@/types";
 
 const loginSchema = z.object({
   email: z
@@ -19,12 +19,19 @@ const loginSchema = z.object({
     .min(1, { message: "Campo obrigatório" }),
 });
 
-export default function useLoginForm() {
+export type UseLoginFormProps = {
+  setUser: (user: User) => void;
+  navigate: ReturnType<typeof useNavigate>;
+  login: LoginFn;
+};
+
+export default function useLoginForm({
+  setUser,
+  navigate,
+  login,
+}: UseLoginFormProps) {
   const [inputType, setInputType] = useState<"password" | "text">("password");
   const [error, setError] = useState<string>();
-
-  const { setUser } = useUserContext();
-  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -50,12 +57,15 @@ export default function useLoginForm() {
 
       const response = await login(values);
 
+      if (response.error) {
+        setError(response.error.message);
+      }
+
       if (response.user) {
         setUser(response.user);
         navigate("/dashboard");
       }
     } catch (error) {
-      console.log("ERROR:", error);
       const message = returnErrorMessage(error);
       setError(message);
     }
