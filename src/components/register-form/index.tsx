@@ -11,19 +11,14 @@ import { Button } from "@/components/ui/button";
 import useRegisterForm from "./use-register-form";
 import PasswordRuleItem from "./password-rule-item";
 
-export default function RegisterForm() {
-  const {
-    form,
-    passwordsAreInvalid,
-    password,
-    error,
-    navigate,
-    onSubmit,
-    ...props
-  } = useRegisterForm();
+type Props = ReturnType<typeof useRegisterForm>;
+
+export default function RegisterForm(props: Props) {
+  const { form, passwordsAreNotEqual, password, error, navigate, onSubmit } =
+    props;
 
   const {
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = form;
 
   return (
@@ -108,7 +103,7 @@ export default function RegisterForm() {
                 <FormControl>
                   <Input placeholder="****" {...field} />
                 </FormControl>
-                {passwordsAreInvalid ? (
+                {passwordsAreNotEqual ? (
                   <p className="text-xs font-medium text-destructive">
                     As senhas devem ser iguais
                   </p>
@@ -121,7 +116,7 @@ export default function RegisterForm() {
         </div>
         <div className="flex flex-col items-center gap-2">
           <Button
-            disabled={passwordsAreInvalid}
+            disabled={passwordsAreNotEqual || !!errors.password}
             type="submit"
             isLoading={isSubmitting}
             className="w-full"

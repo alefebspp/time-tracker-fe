@@ -9,7 +9,7 @@ export async function getProfile() {
   return response.data;
 }
 
-export type LoginFn = typeof login;
+export type LoginRequest = typeof login;
 
 export async function login(params: { email: string; password: string }) {
   const response = await api.post<{
@@ -31,6 +31,8 @@ export async function logout() {
   return response.data;
 }
 
+export type RegisterRequest = typeof register;
+
 export async function register(params: {
   email: string;
   password: string;
@@ -38,6 +40,9 @@ export async function register(params: {
 }) {
   const response = await api.post<{
     message: string;
+    error?: {
+      message: string;
+    };
   }>("/auth/register", params);
 
   return response.data;
