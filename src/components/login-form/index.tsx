@@ -13,9 +13,10 @@ import {
 
 import useLoginForm from "./use-login-form";
 
-export default function LoginForm() {
-  const { form, onSubmit, error, inputType, changeInputType, navigate } =
-    useLoginForm();
+type Props = ReturnType<typeof useLoginForm>;
+
+export default function LoginForm(props: Props) {
+  const { form, onSubmit, error, inputType, changeInputType, navigate } = props;
 
   const {
     formState: { errors, isSubmitting },
