@@ -45,7 +45,7 @@ export default function RecordHistory({ date, records }: Props) {
           <div key={r.id} className="flex items-center gap-2">
             <div
               className={cn(
-                "w-14 h-12 rounded-md flex justify-center items-center bg-[#E9E9E9] text-app-gray-dark",
+                "w-14 h-12 rounded-md flex justify-center items-center bg-[#E9E9E9] text-app-gray-dark shadow-md",
                 {
                   "bg-blue-500 text-white": r.type === "start",
                 }

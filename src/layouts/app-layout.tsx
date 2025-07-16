@@ -46,10 +46,12 @@ export default function AppLayout() {
   }
 
   return (
-    <main className="flex flex-col w-screen h-screen">
+    <main className="flex flex-col w-full h-screen">
       <Header />
-      <div className="w-full h-full max-w-[1200px] mx-auto p-4 lg:p-16 overflow-y-auto">
-        <Outlet />
+      <div className="w-full h-full p-4 lg:p-16 overflow-y-auto">
+        <div className="w-full h-full max-w-[1200px] mx-auto">
+          <Outlet />
+        </div>
       </div>
     </main>
   );

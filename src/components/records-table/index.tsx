@@ -7,8 +7,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useRecordsTable from "./use-records-table";
+import { cn } from "@/lib/utils";
 
-export default function RecordsTable() {
+export default function RecordsTable({ className }: { className?: string }) {
   const { records, recordTypeMap, returnZonedFormattedTime } =
     useRecordsTable();
 
@@ -17,7 +18,7 @@ export default function RecordsTable() {
   }
 
   return (
-    <div className="w-full flex flex-col gap-8">
+    <div className={cn("w-full h-full flex flex-col gap-8", className)}>
       <h2 className="text-app-gray-dark text-center lg:text-left font-semibold text-2xl">
         Registros de hoje
       </h2>
