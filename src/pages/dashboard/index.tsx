@@ -10,13 +10,13 @@ export default function DashboardPage() {
   return (
     <div className="w-full h-full flex flex-col items-center">
       <div className="flex flex-col items-center gap-4 mb-8">
-        <h1 className="text-app-gray-dark text-5xl font-semibold">
+        <h1 className="text-app-gray-dark text-6xl font-semibold">
           {formattedHour}
         </h1>
         <p className="text-lg text-app-gray-light">{formattedDate}</p>
       </div>
       <Timer {...timerProps} />
-      <RecordsTable />
+      <RecordsTable className="pb-4 lg:pb-16" />
     </div>
   );
 }
